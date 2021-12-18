@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Register Page</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/css/register.css">
+    <script src="https://kit.fontawesome.com/09ac4299fa.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="blocMedia">
+            <div class="socialTitle">
+                <h1>Groupomania</h1>
+            </div>
+            <div id="formBloc">
+                <form method="POST" action="/register">
+                <div>
+                    <% if(errors != "") { %>
+                        <% errors.forEach((item) => { %>
+                            <div class="alert alert-danger">
+                                <%- item %>
+                            </div>
+                        <% }); %>
+                    <% } %>
+                </div>
+                    <input type="text" class="form-control" name="u_pseudo" id="u_pseudo" placeholder="Pseudos">
+                    <input type="email" name="u_email" class="form-control" id="u_email" placeholder="Enter email" required>
+                    <input type="password" name="u_pwd" class="form-control" id="u_pwd" placeholder="Password" required>
+                    <input type="password" class="form-control" name="passwordConfirmation" id="passwordConfirmation" placeholder="Password Confirmation" required>
+                    <button v-else id="btnSignUp" >Creer un compte</button>
+                    <div id="trait"></div>
+                </form>  
+            </div>
+        </div>
+</body>
+</html>

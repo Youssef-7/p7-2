@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Login page</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/css/login.css">
+    <script src="https://kit.fontawesome.com/09ac4299fa.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="blocMedia">
+            <div class="socialTitle">
+                <h1>Groupomania</h1>
+            </div>
+            <div id="formBloc">
+                <form method="POST" action="/login">
+                <div>
+                    <% if(errors != "") { %>
+                        <% errors.forEach((item) => { %>
+                            <div class="alert alert-danger">
+                                <%- item %>
+                            </div>
+                        <% }); %>
+                    <% } %>
+                </div>
+                    <input type="u_email" name="u_email"  placeholder="Adresse e-mail">
+                    <input type="u_pwd" name="u_pwd" placeholder="Mot de passe">
+                    <button id="btnConect">Se connecter</button>
+                    <a href="/register"><p>Creer un compte</p></a>
+                    <div id="trait"></div>
+                </form>  
+            </div>
+        </div>
+</body>
+</html>
