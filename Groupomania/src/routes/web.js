@@ -1,5 +1,5 @@
 import express from "express";
-import homePageController from "../controllers/homePageController";
+
 import registerController from "../controllers/registerController";
 import loginController from "../controllers/loginController";
 import auth from "../validation/authValidation";
@@ -12,10 +12,10 @@ initPassportLocal();
 let router = express.Router();
 
 let initWebRoutes = (app) => {
-    router.get("/", loginController.checkLoggedIn, homePageController.handleHelloWorld);
+    router.get("/", loginController.checkLoggedIn,);
     router.get("/login",loginController.checkLoggedOut, loginController.getPageLogin);
     router.post("/login", passport.authenticate("local", {
-        successRedirect: "/",
+        successRedirect: "/books/add",
         failureRedirect: "/login",
         successFlash: true,
         failureFlash: true
