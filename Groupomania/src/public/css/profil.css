@@ -209,7 +209,6 @@ text-decoration: none; }
     max-width: 100%;
     max-width: 1230px;
     background-color: white;
-    height: 130px;
     margin: 50px auto;
     border: solid 2px #CACACA;
     border-radius: 20px;
@@ -218,16 +217,15 @@ text-decoration: none; }
 }
 .publication{
     width: 70%;
-    height: 50px;
     padding: 10px;
     background-color: white;
-    margin: 30px auto;
+    margin: 50px auto;
     border: 1px solid #E3E3E3;
     border-radius: 9px;
     display: flex;  
 }
 form {
-    width: 50%;
+    width: 100%;
     margin-right: 30px;
 }
 .createPost{
@@ -255,8 +253,7 @@ form {
 .send{
     width: 30%;
     padding-top: 10px;
-    padding-left: 90px;
-    margin-left: 100px;
+    margin: auto;
 }
 .send button {
     width: 100%;
