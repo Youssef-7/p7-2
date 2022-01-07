@@ -60,7 +60,8 @@
     </section>
     <section id= "allPost">
     <div class="allPublication">
-      <div class="publicationPost" v-for="post in posts" :key="post.id">
+      <% for(var i = 0; i< data.length; i++) { %>
+      <div class="publicationPost">
         <div class="profilPublication">
         <div class="flexPart2">
         <div class="flexPart1">
@@ -73,10 +74,12 @@
           </div>
         </div>
           <div class="profilPublicationPart2">
-            <div><i class="fas fa-bars"></i></div>
+           <div><a class="btn btn-danger delete" onclick="return alert('Are You sure?')" href="../books/delete/<%=data[i].id%>">Delete</a>  </div>
           </div>
         </div>
         <div class="profilPublicationPost">
+            <h1><%= data[i].name%></h1>
+            <p><%= data[i].author%></p>
           <div class="profilPublicationPostImg">
             <img src="http://www.imcdb.org/i427377.jpg">
           </div>
@@ -101,6 +104,7 @@
        </div>
       </div>
       </div>
+      <% } %>
       <div class="publicationPost">
         <h1>Publication2</h1> 
       </div>

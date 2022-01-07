@@ -56,16 +56,17 @@
       <div class="Photos"><span>Photos</span></div> 
     </section>
     <section id="statut">
-          <div class="publication">
-        <form>
-          <input name="createPost" class="createPost" placeholder="Quoi de neuf ?" type="text">
-        </form>
+      <div class="publication">
+        <form action="/books/add" method="post">
+           <input  name="name" class="createPost" value="<%= name %>" placeholder="Titre de la publication" type="text">
+          <input name="author" class="createPost" value="<%= author %>" placeholder="Quoi de neuf ?" type="text">
         <div class="sendPics">
-          <i class="far fa-images"></i>
+          <!-- <i class="far fa-images"></i>  -->   <!-- a modifier -->
         </div>
         <div class="send">
-          <button class="sendPublication">Envoyer</button>
+            <button type="submit" class="sendPublication" value="Add"> Envoyer </button>
         </div>
+        </form>
       </div>
     </section>
     <section id= monProfil>
