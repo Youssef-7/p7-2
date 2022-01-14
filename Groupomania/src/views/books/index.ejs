@@ -58,8 +58,11 @@
     <section id="statut">
       <div class="publication">
         <form action="/books/add" method="post">
-           <input  name="name" class="createPost" value="<%= name %>" placeholder="Titre de la publication" type="text">
-          <input name="author" class="createPost" value="<%= author %>" placeholder="Quoi de neuf ?" type="text">
+          <input  name="p_titre" class="createPost" value="<%= p_titre %>" placeholder="Titre de la publication" type="text">
+          <input name="p_text" class="createPost" value="<%= p_text %>" placeholder="Quoi de neuf ?" type="text">
+          <input type="hidden" id="p_id" name="p_id" value="<%= p_id %>">
+          <input type="hidden" id="p_parent" name="p_parent" value="<%= p_parent %>" >
+          <input type="hidden" id="p_user_id" name="p_user_id" value="<%= p_user_id %>">
         <div class="sendPics">
           <!-- <i class="far fa-images"></i>  -->   <!-- a modifier -->
         </div>
@@ -114,8 +117,8 @@
           </div>
         </div>
         <div class="profilPublicationPost">
-            <h1><%= data[i].name%></h1>
-            <p><%= data[i].author%></p>
+            <h1><%= data[i].p_text%></h1>
+            <p><%= data[i].p_titre%></p>
           <div class="profilPublicationPostImg">
             <img src="http://www.imcdb.org/i427377.jpg">
           </div>
