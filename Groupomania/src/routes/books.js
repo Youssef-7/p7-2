@@ -6,7 +6,7 @@ import DBConnection from "../configs/DBConnection";
 // display books page
 router.get('/', function(req, res, next) {
       
-    DBConnection.query('SELECT * FROM books ORDER BY id desc',function(err,rows)     {
+    DBConnection.query('SELECT p_id, p_titre, p_date_published  FROM post_messages WHERE p_parent = 0 ORDER BY p_date_published DESC;',function(err,rows)     {
  
         if(err) {
             req.flash('error', err);
@@ -14,7 +14,8 @@ router.get('/', function(req, res, next) {
             res.render('books',{data:''});   
         } else {
             // render to views/books/index.ejs
-            res.render('books',{data:rows, name:'', author:''});
+            res.render('books',{data:rows, p_titre: '',
+        p_text: '', p_parent:'', p_user_id:'', p_id:''});
         }
     });
 });
@@ -22,7 +23,7 @@ router.get('/', function(req, res, next) {
 // render to views/books/add.ejs
 router.get('/add', function(req, res, next) {
       
-    DBConnection.query('SELECT * FROM books ORDER BY id desc',function(err,rows)     {
+    DBConnection.query('SELECT p_id, p_titre, p_date_published  FROM post_messages WHERE p_parent = 0 ORDER BY p_date_published DESC;',function(err,rows)     {
  
         if(err) {
             req.flash('error', err);
@@ -30,8 +31,8 @@ router.get('/add', function(req, res, next) {
             res.render('books/add',{data:''});   
         } else {
             // render to views/books/index.ejs
-            res.render('books/add',{data:rows,name: '',
-        author: ''});
+            res.render('books/add',{data:rows, p_titre: '',
+        p_text: '', p_parent:'', p_user_id:'', p_id:''});
         }
     });
 });
@@ -40,8 +41,11 @@ router.get('/add', function(req, res, next) {
 router.get('/add', function(req, res, next) {    
     // render to add.ejs
     res.render('books/add', {
-        name: '',
-        author: '',
+        p_titre: '',
+        p_text: '',
+        p_id: '',
+        p_parent:'', 
+        p_user_id:'', 
         data: rows        
     })
 })
@@ -49,19 +53,25 @@ router.get('/add', function(req, res, next) {
 // add a new book
 router.post('/add', function(req, res, next) {    
 
-    let name = req.body.name;
-    let author = req.body.author;
+    let p_titre = req.body.p_titre;
+    let p_text = req.body.p_text;
+    let p_id = req.body.p_id;
+    let p_parent = req.body.p_parent;
+    let p_user_id = req.body.p_user_id;
     let errors = false;
 
-    if(name.length === 0 || author.length === 0) {
+    if(p_titre.length === 0 || p_text.length === 0) {
         errors = true;
 
         // set flash message
         req.flash('error', "Please enter name and author");
         // render to add.ejs with flash message
         res.render('books/add', {
-            name: name,
-            author: author
+            p_titre: p_titre,
+            p_text: p_text,
+            p_id:p_id,
+            p_parent:p_parent,
+            p_user_id:p_user_id
         })
     }
 
@@ -69,24 +79,29 @@ router.post('/add', function(req, res, next) {
     if(!errors) {
 
         var form_data = {
-            name: name,
-            author: author
+            p_titre: p_titre,
+            p_text: p_text,
+            p_id:p_id,
+            p_parent:p_parent,
+            p_user_id:p_user_id
         }
         
         // insert query
-        DBConnection.query('INSERT INTO books SET ?', form_data, function(err, result) {
+        DBConnection.query('INSERT INTO post_messages SET ?', form_data, function(err, result) {
             //if(err) throw err
             if (err) {
                 req.flash('error', err)
                  
                 // render to add.ejs
                 res.render('books/add', {
-                    name: form_data.name,
-                    author: form_data.author                    
+                    p_titre: form_data.p_titre,
+                    p_text: form_data.p_text,
+                    p_id: form_data.p_id,                 
                 })
             } else {                
                 req.flash('success', 'Book successfully added');
-                res.redirect('/books');
+                res.redirect('/books');   
+                // faire reload dans le frontend
             }
         })
     }
@@ -94,19 +109,23 @@ router.post('/add', function(req, res, next) {
 // add a new book in add.ejs
 router.post('/books', function(req, res, next) {    
 
-    let name = req.body.name;
-    let author = req.body.author;
+    let p_titre = req.body.p_titre;
+    let p_text = req.body.p_text;
+    let p_id = req.body.p_id;
+    let p_parent = req.body.p_parent;
+    let p_user_id = req.body.p_user_id;
     let errors = false;
 
-    if(name.length === 0 || author.length === 0) {
+    if(p_titre.length === 0 || p_text.length === 0) {
         errors = true;
 
         // set flash message
         req.flash('error', "Please enter name and author");
         // render to add.ejs with flash message
         res.render('books', {
-            name: name,
-            author: author
+            p_titre: p_titre,
+            p_text: p_text,
+            p_id: form_data.p_id, 
         })
     }
 
@@ -114,20 +133,24 @@ router.post('/books', function(req, res, next) {
     if(!errors) {
 
         var form_data = {
-            name: name,
-            author: author
+            p_titre: p_titre,
+            p_text: p_text,
+            p_id:p_id,
+            p_parent:p_parent,
+            p_user_id:p_user_id
         }
         
         // insert query
-        DBConnection.query('INSERT INTO books SET ?', form_data, function(err, result) {
+        DBConnection.query('INSERT INTO post_messages SET ?', form_data, function(err, result) {
             //if(err) throw err
             if (err) {
                 req.flash('error', err)
                  
                 // render to add.ejs
                 res.render('/books', {
-                    name: form_data.name,
-                    author: form_data.author                    
+                    p_titre: form_data.p_titre,
+                    p_text: form_data.p_text,
+                    p_id: form_data.p_id,                 
                 })
             } else {                
                 req.flash('success', 'Book successfully added');
