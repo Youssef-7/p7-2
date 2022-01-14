@@ -6,7 +6,7 @@ import DBConnection from "../configs/DBConnection";
 // display books page
 router.get('/', function(req, res, next) {
       
-    DBConnection.query('SELECT p_id, p_titre, p_date_published  FROM post_messages WHERE p_parent = 0 ORDER BY p_date_published DESC;',function(err,rows)     {
+    DBConnection.query('SELECT p_titre, p_text, p_date_published  FROM post_messages WHERE p_parent = 0 ORDER BY p_date_published DESC;',function(err,rows)     {
  
         if(err) {
             req.flash('error', err);
@@ -15,7 +15,7 @@ router.get('/', function(req, res, next) {
         } else {
             // render to views/books/index.ejs
             res.render('books',{data:rows, p_titre: '',
-        p_text: '', p_parent:'', p_user_id:'', p_id:''});
+        p_text: '', p_parent:'', p_user_id:''});
         }
     });
 });
@@ -23,7 +23,7 @@ router.get('/', function(req, res, next) {
 // render to views/books/add.ejs
 router.get('/add', function(req, res, next) {
       
-    DBConnection.query('SELECT p_id, p_titre, p_date_published  FROM post_messages WHERE p_parent = 0 ORDER BY p_date_published DESC;',function(err,rows)     {
+    DBConnection.query('SELECT p_titre, p_text, p_date_published  FROM post_messages WHERE p_parent = 0 ORDER BY p_date_published DESC;',function(err,rows)     {
  
         if(err) {
             req.flash('error', err);
@@ -32,7 +32,7 @@ router.get('/add', function(req, res, next) {
         } else {
             // render to views/books/index.ejs
             res.render('books/add',{data:rows, p_titre: '',
-        p_text: '', p_parent:'', p_user_id:'', p_id:''});
+        p_text: '', p_parent:'', p_user_id:''});
         }
     });
 });
@@ -44,7 +44,8 @@ router.get('/add', function(req, res, next) {
         p_titre: '',
         p_text: '',
         p_id: '',
-        p_parent:'', 
+        p_parent:'',
+
         p_user_id:'', 
         data: rows        
     })
@@ -55,7 +56,6 @@ router.post('/add', function(req, res, next) {
 
     let p_titre = req.body.p_titre;
     let p_text = req.body.p_text;
-    let p_id = req.body.p_id;
     let p_parent = req.body.p_parent;
     let p_user_id = req.body.p_user_id;
     let errors = false;
@@ -69,7 +69,6 @@ router.post('/add', function(req, res, next) {
         res.render('books/add', {
             p_titre: p_titre,
             p_text: p_text,
-            p_id:p_id,
             p_parent:p_parent,
             p_user_id:p_user_id
         })
@@ -81,7 +80,6 @@ router.post('/add', function(req, res, next) {
         var form_data = {
             p_titre: p_titre,
             p_text: p_text,
-            p_id:p_id,
             p_parent:p_parent,
             p_user_id:p_user_id
         }
@@ -96,7 +94,8 @@ router.post('/add', function(req, res, next) {
                 res.render('books/add', {
                     p_titre: form_data.p_titre,
                     p_text: form_data.p_text,
-                    p_id: form_data.p_id,                 
+                    p_parent:form_data.p_parent,
+                    p_user_id:form_data.p_user_id               
                 })
             } else {                
                 req.flash('success', 'Book successfully added');
@@ -111,7 +110,6 @@ router.post('/books', function(req, res, next) {
 
     let p_titre = req.body.p_titre;
     let p_text = req.body.p_text;
-    let p_id = req.body.p_id;
     let p_parent = req.body.p_parent;
     let p_user_id = req.body.p_user_id;
     let errors = false;
@@ -124,8 +122,9 @@ router.post('/books', function(req, res, next) {
         // render to add.ejs with flash message
         res.render('books', {
             p_titre: p_titre,
-            p_text: p_text,
-            p_id: form_data.p_id, 
+            p_text: p_text, 
+            p_parent:form_data.p_parent,
+            p_user_id:form_data.p_user_id
         })
     }
 
@@ -135,7 +134,6 @@ router.post('/books', function(req, res, next) {
         var form_data = {
             p_titre: p_titre,
             p_text: p_text,
-            p_id:p_id,
             p_parent:p_parent,
             p_user_id:p_user_id
         }
@@ -150,7 +148,8 @@ router.post('/books', function(req, res, next) {
                 res.render('/books', {
                     p_titre: form_data.p_titre,
                     p_text: form_data.p_text,
-                    p_id: form_data.p_id,                 
+                    p_parent:form_data.p_parent,
+                    p_user_id:form_data.p_user_id              
                 })
             } else {                
                 req.flash('success', 'Book successfully added');
