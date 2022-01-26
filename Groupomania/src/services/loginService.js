@@ -1,5 +1,6 @@
 import DBConnection from "../configs/DBConnection";
 import bcrypt from "bcryptjs";
+import jwt from 'jsonwebtoken';
 
 let handleLogin = (u_email, u_pwd) => {
     return new Promise(async (resolve, reject) => {
@@ -9,7 +10,15 @@ let handleLogin = (u_email, u_pwd) => {
             //compare password
             await bcrypt.compare(u_pwd, user.u_pwd).then((isMatch) => {
                 if (isMatch) {
-                    resolve(true);
+            resolve(true);
+            res.status(200).json({
+            userId: u_id,
+            token: jwt.sign(
+              { userId: u_id },
+              'RANDOM_TOKEN_SECRET',
+              { expiresIn: '24h' }
+            )
+          });
                 } else {
                     reject(`The password that you've entered is incorrect`);
                 } //END FUNCTION else
