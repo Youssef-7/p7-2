@@ -60,9 +60,8 @@
         <form action="/books/add" method="post">
           <input  name="p_titre" class="createPost" value="<%= p_titre %>" placeholder="Titre de la publication" type="text">
           <input name="p_text" class="createPost" value="<%= p_text %>" placeholder="Quoi de neuf ?" type="text">
-          <input type="hidden" id="p_id" name="p_id" value="<%= p_id %>">
-          <input type="hidden" id="p_parent" name="p_parent" value="<%= p_parent %>" >
-          <input type="hidden" id="p_user_id" name="p_user_id" value="<%= p_user_id %>">
+          <input type="hidden" id="p_parent" name="p_parent" value="<%= 0 %>" >
+          <input type="hidden" id="p_user_id" name="p_user_id" value="<%=59%>">
         <div class="sendPics">
           <!-- <i class="far fa-images"></i>  -->   <!-- a modifier -->
         </div>
@@ -109,11 +108,11 @@
             </div>
           <div class="profilPublicationPart1">
             <h1>Chuck Norris</h1>
-            <p>07/11/2021</p>
+            <p><%= data[i].p_date_published%></p>
           </div>
         </div>
           <div class="profilPublicationPart2">
-            <div><a class="btn btn-danger delete" onclick="return alert('Are You sure?')" href="../books/delete/<%=data[i].id%>">Delete</a>  </div>
+            <div><a class="btn btn-danger delete" onclick="return alert('Are You sure?')" href="../books/delete?p_id=<%=data[i].p_id%>">Delete</a>  </div>
           </div>
         </div>
         <div class="profilPublicationPost">
@@ -136,10 +135,14 @@
             <div class="imgProfilPublicationPart1">
               <img src="https://fac.img.pmdstatic.net/fit/http.3A.2F.2Fprd2-bone-image.2Es3-website-eu-west-1.2Eamazonaws.2Ecom.2Fprismamedia_people.2F2017.2F12.2F07.2F4cff230b-512f-4b1d-abbb-90bf253fa9f2.2Ejpeg/345x258/quality/80/crop-from/center/chuck-norris.jpeg">
             </div>
-            <form>
-              <input name="createPost" class="createPost" placeholder="Ecrivez un commentaire..." type="text">
+            <form action="/books/add" method="post">
+              <input type="hidden" id="p_parent" name="p_parent" value="<%= 1 %>" >
+              <input type="hidden" id="p_user_id" name="p_user_id" value="<%=59%>">
+              <input value="<%= p_text %>"name="createPost" class="createPost" placeholder="Ecrivez un commentaire..." type="text">
+              <button type="submit" class="sendPublication" value="Add"> Envoyer </button>
             </form>
           </div>
+          <div class="mon commentaire"><%= data[i].p_text%></div>
         </div>
         </div>
         <% } %>
