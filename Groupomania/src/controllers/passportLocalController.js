@@ -1,9 +1,21 @@
 import passportLocal from "passport-local";
+import {Strategy} from 'passport-jwt';
 import passport from "passport";
 import loginService from "../services/loginService";
 
 let LocalStrategy = passportLocal.Strategy;
+// -------------------token--------------------------------
+let cookieExtractor = function(req) {
+    var token = null;
+    if (req && req.cookies)
+    {
+        token = req.cookies['jwt'];
+    }
+    return token;
+};
 
+
+// ---------------------------------------------------------
 let initPassportLocal = () => {
     passport.use(new LocalStrategy({
             usernameField: 'u_email',
@@ -17,6 +29,7 @@ let initPassportLocal = () => {
                         return done(null, false, req.flash("errors", `This user email "${u_email}" doesn't exist`));
                     }
                     if (user) {
+                        
                         let match = await loginService.comparePassword(u_pwd, user);
                         if (match === true) {
                             return done(null, user, null)
@@ -46,4 +59,4 @@ passport.deserializeUser((u_id, done) => {
     });
 });
 
-module.exports = initPassportLocal;
+module.exports = initPassportLocal, cookieExtractor;
